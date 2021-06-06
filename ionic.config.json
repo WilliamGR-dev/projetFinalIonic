@@ -1,0 +1,7 @@
+{
+  "name": "projetFinalIonicApp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}

@@ -6,10 +6,9 @@
         <button type="button" class="form_select btn btn-primary button-select" name="login" onclick="showLogin()">Login</button>
         <button type="button" class="form_select btn btn-primary button-unselect" name="register" onclick="showRegister()">Register</button>
         <form action="{{ url('home') }}" method="post" class="d-flex flex-column">
-          @csrf
           <input type="email" class="input mt-3" name="email" placeholder="Entrée votre email">
           <input type="password" class="input mt-3" name="password" placeholder="Entrée votre mot de passe">
-          <button class="btn btn-primary w-50 m-auto mt-3">Connexion</button>
+          <a href="/homeauth" class="btn btn-primary w-50 m-auto mt-3">Connexion</a>
         </form>
       </div>
     </div>
@@ -36,7 +35,7 @@ export default defineComponent({
 <style scoped>
 #container {
   text-align: center;
-  
+
   position: absolute;
   left: 0;
   right: 0;
@@ -52,9 +51,9 @@ export default defineComponent({
 #container p {
   font-size: 16px;
   line-height: 22px;
-  
+
   color: #8c8c8c;
-  
+
   margin: 0;
 }
 

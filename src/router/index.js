@@ -17,6 +17,21 @@ import Playlists from '../views/Playlists.vue'
 import Playlist from '../views/Playlist.vue'
 import Dashboard from '../views/Dashboard.vue'
 import Profile from '../views/Profile.vue'
+import Upgrade from '../views/Upgrade.vue'
+import Plans from '../views/Plans.vue'
+import Cgu from '../views/Cgu.vue'
+import Subscribe from '../views/Subscribe.vue'
+import AdminUsers from '../views/AdminUsers.vue'
+import FormUser from '../views/FormUser.vue'
+import AdminAlbums from '../views/AdminAlbums.vue'
+import FormAlbum from '../views/FormAlbums.vue'
+import AdminArtistes from '../views/AdminArtistes.vue'
+import FormArtistes from '../views/FormArtistes.vue'
+import AdminMusic from '../views/AdminMusic.vue'
+import FormMusic from '../views/FormMusic.vue'
+import AdminNews from '../views/AdminNews.vue'
+import FormNews from '../views/FormNews.vue'
+import Liked from '../views/Liked.vue'
 
 const routes = [
   {
@@ -99,6 +114,11 @@ const routes = [
     component: Playlists
   },
   {
+    path: '/liked',
+    name: 'liked',
+    component: Liked
+  },
+  {
     path: '/playlist',
     name: 'playlist',
     component: Playlist
@@ -112,6 +132,76 @@ const routes = [
     path: '/profile',
     name: 'profile',
     component: Profile
+  },
+  {
+    path: '/upgrade',
+    name: 'upgrade',
+    component: Upgrade
+  },
+  {
+    path: '/plans',
+    name: 'plans',
+    component: Plans
+  },
+  {
+    path: '/cgu',
+    name: 'cgu',
+    component: Cgu
+  },
+  {
+    path: '/subscribe',
+    name: 'subscribe',
+    component: Subscribe
+  },
+  {
+    path: '/adminusers',
+    name: 'adminusers',
+    component: AdminUsers
+  },
+  {
+    path: '/formuser',
+    name: 'formuser',
+    component: FormUser
+  },
+  {
+    path: '/adminalbums',
+    name: 'adminalbums',
+    component: AdminAlbums
+  },
+  {
+    path: '/formalbum',
+    name: 'formalbum',
+    component: FormAlbum
+  },
+  {
+    path: '/adminartistes',
+    name: 'adminartistes',
+    component: AdminArtistes
+  },
+  {
+    path: '/formartistes',
+    name: 'formartistes',
+    component: FormArtistes
+  },
+  {
+    path: '/adminmusic',
+    name: 'adminmusic',
+    component: AdminMusic
+  },
+  {
+    path: '/formmusic',
+    name: 'formmusic',
+    component: FormMusic
+  },
+  {
+    path: '/adminnews',
+    name: 'adminnews',
+    component: AdminNews
+  },
+  {
+    path: '/formnews',
+    name: 'formnews',
+    component: FormNews
   }
 ]
 

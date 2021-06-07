@@ -14,7 +14,7 @@
               <h4 class="text-white">Text</h4>
             </div>
             <div class="d-flex w-100 justify-content-end">
-              <button class="btn btn-info rounded-pill fw-bold" style="background: linear-gradient(to left, #1E64D7, #1ED761);">En savoir plus</button>
+              <a href="/new" class="btn btn-info rounded-pill fw-bold" style="background: linear-gradient(to left, #1E64D7, #1ED761);">En savoir plus</a>
             </div>
           </div>
         </div>
@@ -72,7 +72,7 @@ export default defineComponent({
 <style scoped>
 #container {
   text-align: center;
-  
+
   position: absolute;
   left: 0;
   right: 0;
@@ -88,9 +88,9 @@ export default defineComponent({
 #container p {
   font-size: 16px;
   line-height: 22px;
-  
+
   color: #8c8c8c;
-  
+
   margin: 0;
 }
 

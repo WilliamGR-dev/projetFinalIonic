@@ -66,6 +66,10 @@
                 Ces organisations peuvent créer un lien vers notre page d'accueil, vers des publications ou vers d'autres informations sur le site Web à condition que le lien: (a) ne soit en aucun cas trompeur; (b) n'implique pas à tort un parrainage, une approbation ou une approbation de la partie liante et de ses produits et / ou services; et (c) s'inscrit dans le contexte du site de la partie liante.
               </div>
             </div>
+            <div class="w-100 mt-3 mb-3 d-flex flex-column"  >
+                <label class="label">CODE PROMO</label>
+                <input type="text" class="form_control" placeholder="Entrer le code promo">
+            </div>
             <div class="w-100">
               <div class="rounded-1 bg-light p-5 text-dark w-75 d-flex flex-column align-items-center mt-4">
                 <h3 class="m-3">PERSONNEL</h3>

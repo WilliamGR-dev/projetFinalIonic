@@ -65,7 +65,7 @@ import { defineComponent } from 'vue';
 import Player from "./Player";
 
 export default defineComponent({
-  name: 'HomeAuth',
+  name: 'artistes',
   components: {
     Player,
   }

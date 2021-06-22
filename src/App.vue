@@ -7,7 +7,7 @@
         </ion-toolbar>
       </ion-header>
       <ion-content>
-          <ion-list>
+          <ion-list v-if="!user.token" >
           <ion-item>
             <ion-icon name="mail" slot="start"></ion-icon>
             <ion-router-link href="">Home</ion-router-link>
@@ -33,7 +33,7 @@
             <ion-router-link href="/contact">Contact</ion-router-link>
           </ion-item>
         </ion-list>
-          <ion-list>
+          <ion-list v-if="user.token" >
               <ion-item>
                   <ion-icon name="mail" slot="start"></ion-icon>
                   <ion-router-link href="/homeauth">Home</ion-router-link>
@@ -68,10 +68,14 @@
               </ion-item>
               <ion-item>
                   <ion-icon name="warning" slot="start"></ion-icon>
-                  <ion-router-link href="/profile">Profile</ion-router-link>
+                  <ion-router-link @click.prevent="showProfile">Profile</ion-router-link>
+              </ion-item>
+              <ion-item>
+                  <ion-icon name="warning" slot="start"></ion-icon>
+                  <ion-router-link @click.prevent="logout">Logout</ion-router-link>
               </ion-item>
           </ion-list>
-          <ion-list>
+          <ion-list v-if="user.data.is_admin == 1">
               <ion-item>
                   <ion-icon name="mail" slot="start"></ion-icon>
                   <ion-router-link href="/adminusers">Admin Users</ion-router-link>
@@ -106,20 +110,31 @@
         </ion-toolbar>
       </ion-header>
       <ion-content>
-        <ion-router-outlet class="overflow-scroll"/>
+        <RouterView></RouterView>
       </ion-content>
     </div>
   </ion-app>
 </template>
 
 <script>
-import { IonRouterOutlet, IonApp, IonTitle, IonToolbar, IonContent, IonHeader, IonIcon, IonItem, IonList, IonMenu, IonButtons, IonMenuButton } from '@ionic/vue';
+import { mapActions, mapGetters } from "vuex"
+import { IonApp, IonTitle, IonToolbar, IonContent, IonHeader, IonIcon, IonItem, IonList, IonMenu, IonButtons, IonMenuButton } from '@ionic/vue';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'App',
+    data: function () {
+        return {
+        }
+    },
+    computed: {
+        ...mapGetters(['user'])
+    },
+    methods: {
+        ...mapActions(['logout']),
+        ...mapActions(['showProfile']),
+    },
   components: {
-    IonRouterOutlet,
     IonApp,
     IonTitle,
     IonToolbar,

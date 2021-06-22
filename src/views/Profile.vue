@@ -17,23 +17,24 @@
                     <a href="/subscribe" class="btn btn-light rounded-pill ">Abonnement</a>
                   </div>
                 </div>
-                <form class="d-flex flex-wrap w-100">
+                <form class="d-flex flex-wrap w-100" @submit.prevent="modifyProfile(formModify)">
                   <div class="w-100 p-4 " style="padding: 0 100px 30px 0">
-                    <label>Nom</label>
-                    <input class="form-control " name="lastname">
+                    <label>Nom / Prenom</label>
+                    <input class="form-control " name="name" v-model="formModify.name">
                   </div>
                   <div class="w-100 p-4 " style="padding: 0 100px 30px 0">
-                    <label>Prenom</label>
-                    <input class="form-control " name="lastname">
+                    <label>Email</label>
+                    <input class="form-control " name="email" v-model="formModify.email">
                   </div>
                   <div class="w-100 p-4 " style="padding: 0 100px 30px 0">
                     <label>Password</label>
-                    <input class="form-control " name="lastname">
+                    <input class="form-control " name="password" v-model="formModify.password">
                   </div>
                   <div class="w-100 p-4 " style="padding: 0 100px 30px 0">
                     <label>Confirme Password</label>
-                    <input class="form-control " name="lastname">
+                    <input class="form-control " name="confirmPassword" v-model="formModify.confirmPassword">
                   </div>
+                    <input class="form-control " name="id" type="hidden" v-model="formModify.id">
                   <button class=" m-auto p-2 btn btn-outline-light border-0 rounded-pill  fw-bold " style="background: linear-gradient(to left, #1ED761, #1E64D7);color: black">Modifier</button>
                 </form>
               </div>
@@ -47,16 +48,37 @@
 </template>
 
 <script>
-import {  } from '@ionic/vue';
-import { defineComponent } from 'vue';
+import { mapActions, mapGetters } from 'vuex'
 import Player from "./Player";
 
-export default defineComponent({
-  name: 'HomeAuth',
-  components: {
-    Player,
-  }
-});
+export default {
+    name: "Profile",
+    data() {
+        return {
+            formModify: {}
+        };
+    },
+    components: {
+        Player,
+    },
+    computed: {
+        ...mapGetters(['msg']),
+        ...mapGetters(['user'])
+    },
+    methods: {
+        ...mapActions(['modify']),
+        modifyProfile(formModify){
+            this.modify(formModify)
+        }
+    },
+    mounted(){
+        this.msg.success = ''
+        this.msg.error = ''
+        this.formModify.name = this.user.data.name
+        this.formModify.email = this.user.data.email
+        this.formModify.id = this.user.data.id
+    }
+}
 </script>
 
 <style scoped>

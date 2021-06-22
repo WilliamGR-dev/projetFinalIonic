@@ -20,13 +20,12 @@
       </div>
       <div class="card bg-transparent border-0 w-100 p-5 pt-1">
         <div class="card-body p-0" id="login">
-          <form action="{{ url('azf') }}" method="post" class="d-flex flex-column">
-            @csrf
-            <input type="text" class="input" name="last_name" placeholder="PRENOM">
-            <input type="text" class="input mt-3" name="first_name" placeholder="NOM">
-            <input type="email" class="input mt-3" name="email" placeholder="EMAIL">
-            <input type="text" class="input mt-3" name="object" placeholder="OBJECT">
-            <textarea class="form-control text-area" style="background: rgba(255,255,255,0.09)" rows="7" name="message" placeholder="MESSAGE"></textarea>
+          <form @submit.prevent="sendMail(form)" method="post" class="d-flex flex-column">
+            <input type="text" class="input" name="last_name" placeholder="PRENOM" v-model="form.first_name">
+            <input type="text" class="input mt-3" name="first_name" placeholder="NOM" v-model="form.last_name">
+            <input type="email" class="input mt-3" name="email" placeholder="EMAIL" v-model="form.email">
+            <input type="text" class="input mt-3" name="object" placeholder="OBJECT" v-model="form.object">
+            <textarea class="form-control text-area" style="background: rgba(255,255,255,0.09)" rows="7" name="message" placeholder="MESSAGE" v-model="form.message"></textarea>
             <button href="#" class="btn btn-primary w-100 m-auto p-3 rounded-pill mt-3 fw-bold" style="background: linear-gradient(300deg, #5500C9, #2b8bfa);border: none">Envoyer</button>
           </form>
         </div>
@@ -35,22 +34,36 @@
   </section>
 </template>
 
+
 <script>
-import {  } from '@ionic/vue';
-import { defineComponent } from 'vue';
+import {mapActions} from 'vuex'
 
-export default defineComponent({
-  name: 'Home',
-  components: {
+export default {
+    name: "Contact",
+    data() {
+        return {
+            form: {}
+        };
+    },
+    computed: {
+    },
+    methods: {
+        ...mapActions(['sendContact']),
+        sendMail(form){
+            this.sendContact(form)
+            this.form = {}
+        },
 
-  }
-});
+    },
+    mounted(){
+    }
+}
 </script>
 
 <style scoped>
 #container {
   text-align: center;
-  
+
   position: absolute;
   left: 0;
   right: 0;
@@ -66,9 +79,9 @@ export default defineComponent({
 #container p {
   font-size: 16px;
   line-height: 22px;
-  
+
   color: #8c8c8c;
-  
+
   margin: 0;
 }
 

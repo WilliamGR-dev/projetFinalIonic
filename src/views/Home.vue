@@ -36,32 +36,11 @@
     <div class="sectionNews ion-text-center">
       <h2>Actualité</h2>
       <div class="news">
-        <div class="card text-dark" style="width: 75%;margin: auto;margin-top: 50px;margin-bottom: 50px;" >
+        <div class="card text-dark" v-for="actu in news.data"  v-bind:key="actu.id" style="width: 75%;margin: auto;margin-top: 50px;margin-bottom: 50px;" >
           <img  src="https://picsum.photos/1000/1000" class="card-img-top" alt="...">
           <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          </div>
-        </div>
-        <div class="card text-dark" style="width: 75%;margin: auto;margin-top: 50px;margin-bottom: 50px;" >
-          <img  src="https://picsum.photos/1000/1000" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          </div>
-        </div>
-        <div class="card text-dark" style="width: 75%;margin: auto;margin-top: 50px;margin-bottom: 50px;" >
-          <img  src="https://picsum.photos/1000/1000" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          </div>
-        </div>
-        <div class="card text-dark" style="width: 75%;margin: auto;margin-top: 50px;margin-bottom: 50px;" >
-          <img  src="https://picsum.photos/1000/1000" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <h5 class="card-title">{{ actu.title }}</h5>
+            <p class="card-text">{{ actu.text_description }}</p>
           </div>
         </div>
       </div>
@@ -70,22 +49,37 @@
 </template>
 
 <script>
-import {  IonImg } from '@ionic/vue';
-import { defineComponent } from 'vue';
+import {mapActions, mapGetters} from 'vuex'
 
-export default defineComponent({
-  name: 'Home',
-  components: {
-    IonImg
+export default {
+    name: "Home",
+    data() {
+        return {
 
-  }
-});
+        };
+    },
+    computed: {
+        ...mapGetters(['news'])
+    },
+    methods: {
+        ...mapActions(['getNews']),
+        callGetNews(){
+            this.getNews()
+        }
+    },
+    components:{
+
+    },
+    mounted(){
+        this.callGetNews()
+    }
+}
 </script>
 
 <style scoped>
 #container {
   text-align: center;
-  
+
   position: absolute;
   left: 0;
   right: 0;
@@ -101,9 +95,9 @@ export default defineComponent({
 #container p {
   font-size: 16px;
   line-height: 22px;
-  
+
   color: #8c8c8c;
-  
+
   margin: 0;
 }
 

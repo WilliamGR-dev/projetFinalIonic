@@ -36,17 +36,28 @@
   </section>
 </template>
 
-<script>
-import {  } from '@ionic/vue';
-import { defineComponent } from 'vue';
-import Player from "./Player";
 
-export default defineComponent({
-  name: 'HomeAuth',
-  components: {
-    Player,
-  }
-});
+<script>
+import {  } from 'vuex'
+
+import Player from "./Player";
+export default {
+    name: "HomeAuth",
+    data() {
+        return {
+
+        };
+    },
+    computed: {
+    },
+    components: {
+        Player,
+    },
+    methods: {
+    },
+    mounted(){
+    }
+}
 </script>
 
 <style scoped>

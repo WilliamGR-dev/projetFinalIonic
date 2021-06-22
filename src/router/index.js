@@ -76,7 +76,7 @@ const routes = [
   {
     path: '/homeauth',
     name: 'HomeAuth',
-    component: HomeAuth
+    component: HomeAuth,
   },
   {
     path: '/albums',

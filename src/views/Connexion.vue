@@ -3,12 +3,12 @@
     <div class="card card-connexion position-absolute bg-transparent border-0">
       <div class="card-body" id="login">
         <h5 class="card-title text-center title-connexion text-white">Connexion</h5>
-        <button type="button" class="form_select btn btn-primary button-select" name="login" onclick="showLogin()">Login</button>
-        <button type="button" class="form_select btn btn-primary button-unselect" name="register" onclick="showRegister()">Register</button>
-        <form action="{{ url('home') }}" method="post" class="d-flex flex-column">
-          <input type="email" class="input mt-3" name="email" placeholder="Entrée votre email">
-          <input type="password" class="input mt-3" name="password" placeholder="Entrée votre mot de passe">
-          <a href="/homeauth" class="btn btn-primary w-50 m-auto mt-3">Connexion</a>
+        <a type="button" class="form_select btn btn-primary button-select"  href="/connexion">Login</a>
+        <a type="button" class="form_select btn btn-primary button-unselect"  href="/register">Register</a>
+        <form @submit.prevent="connectUser(form)" method="post" class="d-flex flex-column">
+          <input type="email" class="input mt-3" name="email" placeholder="Entrée votre email" v-model="form.email">
+          <input type="password" class="input mt-3" name="password" placeholder="Entrée votre mot de passe" v-model="form.password">
+          <button type="submit" class="btn btn-primary w-50 m-auto mt-3">Connexion</button>
         </form>
       </div>
     </div>
@@ -17,18 +17,29 @@
 </template>
 
 <script>
-import {  } from '@ionic/vue';
-import { defineComponent } from 'vue';
+import { mapActions, mapGetters } from 'vuex'
 
-export default defineComponent({
-  name: 'Home',
-  components: {
-
-  },
-  methods: {
-
-  }
-});
+export default {
+    name: "Connexion",
+    data() {
+        return {
+            form: {}
+        };
+    },
+    computed: {
+        ...mapGetters(['msg'])
+    },
+    methods: {
+        ...mapActions(['login']),
+        connectUser(form){
+            this.login(form)
+        }
+    },
+    mounted(){
+        this.msg.success = ''
+        this.msg.error = ''
+    }
+}
 
 </script>
 

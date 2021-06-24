@@ -6,8 +6,11 @@ export default {
     news:{
 
     },
-    task:{
-        body: ''
+    onenew:{
+
+    },
+    planId:{
+
     },
     msg: {
         error: '',

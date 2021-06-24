@@ -18,6 +18,7 @@ export const login = ({ commit, state }, form) => {
             email: response.data.email,
             created_at: response.data.created_at,
             is_admin: response.data.is_admin,
+            subscribeNow: response.data.is_subscribe,
         }
 
         commit('data', user)
@@ -49,7 +50,7 @@ export const register = ({ commit, state }, form) => {
 
         commit('data', user)
         state.msg.success = 'Compte enregsitré'
-        window.location.href="/"
+        router.push('connexion');
     }).catch(() => {
         state.msg.error = "L'email existe deja"
     });
@@ -116,6 +117,33 @@ export const getNews = ({ commit, state }) => {
     });
 }
 
+export const getNew = ({ commit, state }, id) => {
+    axios.get(
+        process.env.VUE_APP_API_URL+'/new/'+id).then((response) => {
+        const news = response.data.new
+
+
+        commit('onenew', news)
+
+        router.push('new');
+    }).catch(() => {
+        state.msg.error = "Echec du get"
+    });
+}
+
+export const getAllNews = ({ commit, state }) => {
+    axios.get(
+        process.env.VUE_APP_API_URL+'/allnews').then((response) => {
+        const news = response.data.allNews
+
+        console.log(news)
+
+        commit('news', news)
+    }).catch(() => {
+        state.msg.error = "Echec du get"
+    });
+}
+
 export const sendContact = ({ state }, form) => {
     axios.post(
         process.env.VUE_APP_API_URL+'/contact',{
@@ -132,74 +160,59 @@ export const sendContact = ({ state }, form) => {
     });
 }
 
+export const showCgu = ({ commit }, id) => {
+
+    commit('planId', id)
+
+    router.push('cgu');
+}
+
+export const sessionUpdate = ({ state }) => {
+
+    state.user.data.subscribeNow = true;
+    router.push('profile');
+}
+
 export const showProfile = () => {
     router.push('profile');
 }
 
-export const tasks_user = ({ commit, getters, state }) => {
-    axios.post(
-        'http://sanctumwilliam.herokuapp.com/api/tasksuser',{
-            user_id: getters.user.data.id
-        }, {
-            headers: {
-                'Authorization': `Bearer ${state.user.token}`
-            }
-        }).then((response) => {
-        const tasks = response.data['posts']
-
-        commit('tasks', tasks)
-    }).catch(() => {
-        state.msg.error = "Echec du get"
-    });
+export const showSearch = () => {
+    router.push('search');
 }
 
-export const updateTask = ({  state }, task) => {
-    axios.put(
-        `http://sanctumwilliam.herokuapp.com/api/tasks/${task.id}`, {
-            body: task.body,
-        },
-        {
-            headers: {
-                'Authorization': `Bearer ${state.user.token}`
-            }
-        }
-    ).then(() => {
-        state.msg.success = 'task updates'
-        router.push('/me');
-    }).catch(() => {
-        state.msg.error = 'Erreur mise a jour'
-    });
+export const showLiked = () => {
+    router.push('liked');
 }
 
-export const deleteTask = ({ state }, taskId) => {
-    axios.delete(
-        `http://sanctumwilliam.herokuapp.com/api/tasks/${taskId}`, {
-            headers: {
-                'Authorization': `Bearer ${state.user.token}`
-            }
-        }).then(() => {
-        state.msg.success = 'task destroyed'
-        router.push('/me');
-    }).catch(() => {
-        state.msg.error = "Echec de la suppresion"
-    });
+export const showRecentlyPlayed = () => {
+    router.push('recentlyplayed');
 }
 
-export const createTask = ({ getters, state }, form) => {
-    axios.post(
-        'http://sanctumwilliam.herokuapp.com/api/tasks', {
-            body: form.body,
-            user_id: getters.user.data.id
-        },
-        {
-            headers: {
-                'Authorization': `Bearer ${state.user.token}`
-            }
-        }
-    ).then(() => {
-        state.msg.success = 'task created'
-        router.push('/tasks');
-    }).catch(() => {
-        state.msg.error = "Echec d'ajout"
-    });
+export const showPlaylists = () => {
+    router.push('playlists');
+}
+
+export const showAlbums = () => {
+    router.push('albums');
+}
+
+export const showArtistes = () => {
+    router.push('artistes');
+}
+
+export const showUpgrade = () => {
+    router.push('upgrade');
+}
+
+export const showHomeAuth = () => {
+    router.push('homeauth');
+}
+
+export const showPlans = () => {
+    router.push('plans');
+}
+
+export const showLogin = () => {
+    router.push('connexion');
 }

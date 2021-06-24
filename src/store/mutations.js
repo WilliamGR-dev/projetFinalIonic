@@ -10,6 +10,14 @@ export const news = (state, news) => {
     state.news = news
 }
 
+export const onenew = (state, onenew) => {
+    state.onenew = onenew
+}
+
+export const planId = (state, planId) => {
+    state.planId = planId
+}
+
 export const task = (state, task) => {
     state.task = task
 }

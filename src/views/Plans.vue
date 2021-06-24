@@ -83,8 +83,8 @@
       </tr>
       <tr>
         <td class="text-white"></td>
-        <td class="bg-info"><a href="/cgu" class="btn btn-light w-75 rounded-pill button-service">ACHETER<br>MAINENANT</a></td>
-        <td class="bg-pink"><a href="/cgu" class="btn btn-light w-75 rounded-pill button-service">ACHETER<br>MAINENANT</a></td>
+        <td class="bg-info"><a @click.prevent="displayCgu('price_1J2H1vGsegk9YRQoKXhtXvqW')" class="btn btn-light w-75 rounded-pill button-service">ACHETER<br>MAINENANT</a></td>
+        <td class="bg-pink"><a @click.prevent="displayCgu('price_1J2H2ZGsegk9YRQooblJfbxa')" class="btn btn-light w-75 rounded-pill button-service">ACHETER<br>MAINENANT</a></td>
       </tr>
 
     </table>
@@ -93,16 +93,31 @@
 </template>
 
 <script>
-import { } from '@ionic/vue';
-import { defineComponent } from 'vue';
+import {mapActions} from 'vuex'
 
-export default defineComponent({
-  name: 'Home',
-  components: {
+export default {
+    name: "Plans",
+    data() {
+        return {
 
+        };
+    },
+    computed: {
 
-  }
-});
+    },
+    methods: {
+        ...mapActions(['showCgu']),
+        displayCgu(id){
+            this.showCgu(id)
+        }
+    },
+    components: {
+
+    },
+    mounted(){
+    }
+
+}
 </script>
 
 <style scoped>

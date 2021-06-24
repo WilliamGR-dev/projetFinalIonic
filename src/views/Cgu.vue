@@ -68,9 +68,10 @@
             </div>
             <div class="w-100 mt-3 mb-3 d-flex flex-column"  >
                 <label class="label">CODE PROMO</label>
-                <input type="text" class="form_control" placeholder="Entrer le code promo">
+                <input type="text" class="form_control text-dark" placeholder="Entrer le code promo" v-model="form.promo">
             </div>
-            <div class="w-100">
+              <div id="card-element"></div>
+            <div v-if="planId == 'price_1J2H1vGsegk9YRQoKXhtXvqW'" class="w-100">
               <div class="rounded-1 bg-light p-5 text-dark w-75 d-flex flex-column align-items-center mt-4">
                 <h3 class="m-3">PERSONNEL</h3>
                 <h3 class="m-3">4,99€/mois</h3>
@@ -84,26 +85,150 @@
                 <div>4,99€</div>
               </div>
             </div>
+            <div v-if="planId == 'price_1J2H2ZGsegk9YRQooblJfbxa'" class="w-100">
+              <div class="rounded-1 bg-light p-5 text-dark w-75 d-flex flex-column align-items-center mt-4">
+                <h3 class="m-3">Famille</h3>
+                <h3 class="m-3">9,99€/mois</h3>
+              </div>
+              <div class="w-100 d-flex justify-content-between mt-5">
+                <div>Panier</div>
+                <div>9,99€</div>
+              </div>
+              <div class="w-100 d-flex justify-content-between mt-5">
+                <div>Total</div>
+                <div>9,99€</div>
+              </div>
+            </div>
           </div>
           <button class="btn btn-outline-light mt-4">Annuler</button>
-          <button class="btn btn-outline-light mt-4" style="margin-left: 50px">Continuer</button>
+          <button class="btn btn-outline-light mt-4" style="margin-left: 50px" @click.prevent="submit">Payer Maintenant</button>
         </div>
       </div>
     </section>
   </section>
 </template>
 
+
 <script>
-import { } from '@ionic/vue';
-import { defineComponent } from 'vue';
+import {
+    toastController,
+} from "@ionic/vue";
+import {mapActions, mapGetters} from 'vuex'
+import axios from "axios";
 
-export default defineComponent({
-  name: 'Home',
-  components: {
+export default {
+    name: "Cgu",
+    data() {
+        return {
+            secret: null,
+            stripe: null,
+            payment_method: null,
+            requires_action: null,
+            payment_intent: null,
+            card: null,
+            payment_processed: false,
+            message_processed: "",
+            form: {
 
+            }
+        };
+    },
+    computed: {
+        ...mapGetters(['planId']),
+        ...mapGetters(['user']),
+    },
+    methods: {
+        ...mapActions(['sessionUpdate']),
+        async submit() {
+            this.payment_processing = true;
+            const { setupIntent, error } = await this.stripe.confirmCardSetup(
+                this.secret,
+                {
+                    payment_method: {
+                        card: this.card,
+                        billing_details: { name: this.name },
+                    },
+                }
+            );
+            if (error) {
+                console.log(error);
+                const toast = await toastController.create({
+                    message: error.message,
+                    duration: 2000,
+                    color: "danger",
+                });
+                return toast.present();
+            } else {
+                console.log(setupIntent);
+                this.payment_method = setupIntent.payment_method;
+                await axios
+                    .post(
+                        `${process.env.VUE_APP_API_URL}/stripe/subscribe`,
+                        {
+                            id: this.user.data.id,
+                            plan: this.planId,
+                            name: this.user.data.name,
+                            payment_method: this.payment_method,
+                            coupon: this.form.promo,
+                        },
+                        {
+                            headers: {
+                                Authorization: `Bearer ${this.token}`,
+                            },
+                        }
+                    )
+                    .then((response) => {
+                        console.log(response.data);
+                        if (
+                            response.data.status &&
+                            response.data.status == "requires_action"
+                        ) {
+                            // Confirmation
+                            this.$emit('paymentMethod', this.payment_method)
+                            this.$emit('requiresAction', true)
+                            this.$emit('paymentIntent', response.data)
+                        } else {
+                            this.sessionUpdate();
+                            this.$emit('paymentProcessed', true);
+                            this.$emit('messageProcessed', "Merci de votre abonnement ! 🤑");
+                        }
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            }
+        },
+    },
+    components: {
 
-  }
-});
+    },
+    mounted(){
+        this.stripe = window.Stripe(process.env.VUE_APP_STRIPE_PUBLIC_KEY);
+        const elements = this.stripe.elements();
+        this.card = elements.create("card");
+        this.card.mount("#card-element");
+
+        axios.post(
+            `${process.env.VUE_APP_API_URL}/stripe/intent`,
+            {
+                id: this.user.data.id,
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${this.token}`,
+                },
+            }
+        )
+            .then((response) => {
+                this.secret = response.data.client_secret;
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+
+    }
+
+}
 </script>
 
 <style scoped>

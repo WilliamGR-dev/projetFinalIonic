@@ -22,7 +22,7 @@
           </ion-item>
           <ion-item>
             <ion-icon name="archive" slot="start"></ion-icon>
-            <ion-router-link href="/connexion">Connexion</ion-router-link>
+            <ion-router-link @click.prevent="showLogin">Connexion</ion-router-link>
           </ion-item>
           <ion-item>
             <ion-icon name="trash" slot="start"></ion-icon>
@@ -36,35 +36,35 @@
           <ion-list v-if="user.token" >
               <ion-item>
                   <ion-icon name="mail" slot="start"></ion-icon>
-                  <ion-router-link href="/homeauth">Home</ion-router-link>
+                  <ion-router-link @click.prevent="showHomeAuth">Home</ion-router-link>
               </ion-item>
               <ion-item>
                   <ion-icon name="paper-plane" slot="start"></ion-icon>
-                  <ion-router-link href="/artistes">Artistes</ion-router-link>
+                  <ion-router-link @click.prevent="showArtistes">Artistes</ion-router-link>
               </ion-item>
               <ion-item>
                   <ion-icon name="paper-plane" slot="start"></ion-icon>
-                  <ion-router-link href="/albums">Albums</ion-router-link>
+                  <ion-router-link @click.prevent="showAlbums">Albums</ion-router-link>
               </ion-item>
               <ion-item>
                   <ion-icon name="paper-plane" slot="start"></ion-icon>
-                  <ion-router-link href="/playlists">Playlists</ion-router-link>
+                  <ion-router-link @click.prevent="showPlaylists">Playlists</ion-router-link>
               </ion-item>
               <ion-item>
                   <ion-icon name="heart" slot="start"></ion-icon>
-                  <ion-router-link href="/recentlyplayed">Recently Played</ion-router-link>
+                  <ion-router-link @click.prevent="showRecentlyPlayed">Recently Played</ion-router-link>
               </ion-item>
               <ion-item>
                   <ion-icon name="archive" slot="start"></ion-icon>
-                  <ion-router-link href="/liked">Liked</ion-router-link>
+                  <ion-router-link @click.prevent="showLiked">Liked</ion-router-link>
+              </ion-item>
+              <ion-item v-if="user.data.subscribeNow == false">
+                  <ion-icon name="trash" slot="start"></ion-icon>
+                  <ion-router-link @click.prevent="showUpgrade">Upgrade</ion-router-link>
               </ion-item>
               <ion-item>
                   <ion-icon name="trash" slot="start"></ion-icon>
-                  <ion-router-link href="/upgrade">Upgrade</ion-router-link>
-              </ion-item>
-              <ion-item>
-                  <ion-icon name="trash" slot="start"></ion-icon>
-                  <ion-router-link href="/search">Search</ion-router-link>
+                  <ion-router-link @click.prevent="showSearch">Search</ion-router-link>
               </ion-item>
               <ion-item>
                   <ion-icon name="warning" slot="start"></ion-icon>
@@ -133,6 +133,15 @@ export default defineComponent({
     methods: {
         ...mapActions(['logout']),
         ...mapActions(['showProfile']),
+        ...mapActions(['showUpgrade']),
+        ...mapActions(['showLiked']),
+        ...mapActions(['showAlbums']),
+        ...mapActions(['showArtistes']),
+        ...mapActions(['showPlaylists']),
+        ...mapActions(['showRecentlyPlayed']),
+        ...mapActions(['showSearch']),
+        ...mapActions(['showHomeAuth']),
+        ...mapActions(['showLogin']),
     },
   components: {
     IonApp,

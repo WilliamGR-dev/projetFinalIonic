@@ -14,7 +14,8 @@
                     <div class="text-white" ><h1>Prenom Nom</h1></div>
                   </div>
                   <div class="w-100 p-4 d-flex justify-content-center" style="background-color: #34465F;width: 100%;">
-                    <a href="/subscribe" class="btn btn-light rounded-pill ">Abonnement</a>
+                    <a v-if="url == false" @click.prevent="showUpgrade" class="btn btn-light rounded-pill ">Abonnement</a>
+                    <a v-else :href="url" class="btn btn-light rounded-pill ">Gerer son Abonnement</a>
                   </div>
                 </div>
                 <form class="d-flex flex-wrap w-100" @submit.prevent="modifyProfile(formModify)">
@@ -50,12 +51,14 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'
 import Player from "./Player";
+import axios from "axios";
 
 export default {
     name: "Profile",
     data() {
         return {
-            formModify: {}
+            formModify: {},
+            url: null
         };
     },
     components: {
@@ -67,9 +70,11 @@ export default {
     },
     methods: {
         ...mapActions(['modify']),
+        ...mapActions(['showUpgrade']),
         modifyProfile(formModify){
             this.modify(formModify)
-        }
+        },
+
     },
     mounted(){
         this.msg.success = ''
@@ -77,6 +82,23 @@ export default {
         this.formModify.name = this.user.data.name
         this.formModify.email = this.user.data.email
         this.formModify.id = this.user.data.id
+        axios.post(
+            `${process.env.VUE_APP_API_URL}/profile/url`,
+            {
+                id: this.user.data.id,
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${this.token}`,
+                },
+            }
+        )
+            .then((response) => {
+                this.url = response.data.url;
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
 }
 </script>

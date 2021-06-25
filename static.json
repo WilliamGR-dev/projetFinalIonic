@@ -1,15 +1,7 @@
 {
-<<<<<<< HEAD
     "root": "dist",
     "clean_urls": true,
     "routes": {
         "/**": "index.html"
     }
-=======
-  "root": "dist",
-  "clean_urls": true,
-  "routes": {
-    "/**": "index.html"
-  }
->>>>>>> b220361f9b675a10d04b7a8cc702175ced273224
 }

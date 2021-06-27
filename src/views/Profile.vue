@@ -74,11 +74,17 @@ export default {
         modifyProfile(formModify){
             this.modify(formModify)
         },
+        async presentToast() {
+            const toast = document.createElement('ion-toast');
+            toast.message = 'Your settings have been saved.';
+            toast.duration = 2000;
+
+            document.body.appendChild(toast);
+            return toast.present();
+        }
 
     },
     mounted(){
-        this.msg.success = ''
-        this.msg.error = ''
         this.formModify.name = this.user.data.name
         this.formModify.email = this.user.data.email
         this.formModify.id = this.user.data.id

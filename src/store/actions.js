@@ -51,13 +51,18 @@ export const register = ({ commit, state }, form) => {
         commit('data', user)
         state.msg.success = 'Compte enregsitré'
         router.push('connexion');
-    }).catch(() => {
-        state.msg.error = "L'email existe deja"
+    }).catch((error) => {
+        state.msg.error = error.response.data.message;
+        router.push('register');
     });
 }
 
 export const modify = ({ commit, state }, form) => {
-    console.log(form)
+    state.msg.success = ''
+    state.msg.error = ''
+    if (form.name == '' && form.email == ''){
+        state.msg.error = "Erreur lors de la modification"
+    }
     axios.post(
         process.env.VUE_APP_API_URL+'/modify',
         {
@@ -79,7 +84,7 @@ export const modify = ({ commit, state }, form) => {
         state.msg.success = 'Compte Modifié'
         router.push('profile');
     }).catch(() => {
-        state.msg.error = "L'email existe deja"
+        state.msg.error = "Erreur lors de la modification"
     });
 }
 

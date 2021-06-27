@@ -34,9 +34,23 @@ export default {
         ...mapActions(['register']),
         registerUser(form){
             this.register(form)
+        },
+        async presentToastError() {
+            const toast = document.createElement('ion-toast');
+            toast.message = this.msg.error;
+            toast.duration = 2000;
+
+            document.body.appendChild(toast);
+            return toast.present();
         }
     },
     mounted(){
+        if (this.msg.success != ''){
+           console.log( this.msg.success)
+        }
+        if (this.msg.error != ''){
+            this.presentToastError()
+        }
         this.msg.success = ''
         this.msg.error = ''
     }

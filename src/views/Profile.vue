@@ -10,8 +10,7 @@
               <div class="rounded pb-4" style="border: 2px solid #707070;width: 100%;margin-bottom: 100px;">
                 <div  class="mb-5">
                   <div class="d-flex flex-column align-items-center" style="padding-top: 30px">
-                    <div class="bg-info" style="width: 150px;height: 150px"></div>
-                    <div class="text-white" ><h1>Prenom Nom</h1></div>
+                    <div class="bg-info mb-4" style="width: 150px;height: 150px"></div>
                   </div>
                   <div class="w-100 p-4 d-flex justify-content-center" style="background-color: #34465F;width: 100%;">
                     <a v-if="url == false" @click.prevent="showUpgrade" class="btn btn-light rounded-pill ">Abonnement</a>
@@ -74,14 +73,6 @@ export default {
         modifyProfile(formModify){
             this.modify(formModify)
         },
-        async presentToast() {
-            const toast = document.createElement('ion-toast');
-            toast.message = 'Your settings have been saved.';
-            toast.duration = 2000;
-
-            document.body.appendChild(toast);
-            return toast.present();
-        }
 
     },
     mounted(){

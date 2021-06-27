@@ -26,11 +26,16 @@ export const login = ({ commit, state }, form) => {
         console.log(router.push('HomeAuth'))
         router.push('HomeAuth');
     }).catch(() => {
-        state.msg.error = 'Mauvais identifiant'
+        const toast = document.createElement('ion-toast');
+        toast.message = 'Mauvais identifiant';
+        toast.duration = 2000;
+
+        document.body.appendChild(toast);
+        return toast.present();
     });
 }
 
-export const register = ({ commit, state }, form) => {
+export const register = ({ commit }, form) => {
     axios.post(
         process.env.VUE_APP_API_URL+'/auth/register',
         {
@@ -49,11 +54,19 @@ export const register = ({ commit, state }, form) => {
         }
 
         commit('data', user)
-        state.msg.success = 'Compte enregsitré'
-        router.push('connexion');
+        const toast = document.createElement('ion-toast');
+        toast.message = 'Compte enregsitré';
+        toast.duration = 2000;
+
+        document.body.appendChild(toast);
+        return toast.present();
     }).catch((error) => {
-        state.msg.error = error.response.data.message;
-        router.push('register');
+        const toast = document.createElement('ion-toast');
+        toast.message = error.response.data.message;
+        toast.duration = 2000;
+
+        document.body.appendChild(toast);
+        return toast.present();
     });
 }
 
@@ -73,19 +86,30 @@ export const modify = ({ commit, state }, form) => {
             confirmPassword: form.confirmPassword
         }
     ).then((response) => {
+        if (response.status == 200){
+            const user = {
+                name: response.data.name,
+                email: response.data.email,
+                created_at: response.data.created_at
+            }
 
-        const user = {
-            name: response.data.name,
-            email: response.data.email,
-            created_at: response.data.created_at
+            commit('data', user)
+            const toast = document.createElement('ion-toast');
+            toast.message = 'Compte Modifié';
+            toast.duration = 2000;
+
+            document.body.appendChild(toast);
+            return toast.present();
         }
-
-        commit('data', user)
-        state.msg.success = 'Compte Modifié'
-        router.push('profile');
     }).catch(() => {
-        state.msg.error = "Erreur lors de la modification"
+        const toast = document.createElement('ion-toast');
+        toast.message = 'Erreur lors de la modification';
+        toast.duration = 2000;
+
+        document.body.appendChild(toast);
+        return toast.present();
     });
+    router.push('profile');
 }
 
 export const logout = ({ commit, state }) => {
@@ -100,9 +124,19 @@ export const logout = ({ commit, state }) => {
                 'Authorization': `Bearer ${token}`
             }
         }).then(() => {
-        state.msg.success = 'Vous etes déconnecté'
+        const toast = document.createElement('ion-toast');
+        toast.message = 'Vous etes déconnecté';
+        toast.duration = 2000;
+
+        document.body.appendChild(toast);
+        return toast.present();
     }).catch(() => {
-        state.msg.error = "Echec de la deconnexion"
+        const toast = document.createElement('ion-toast');
+        toast.message = 'Echec de la deconnexion';
+        toast.duration = 2000;
+
+        document.body.appendChild(toast);
+        return toast.present();
     });
     commit('token', null);
     commit('data', {});
@@ -149,7 +183,7 @@ export const getAllNews = ({ commit, state }) => {
     });
 }
 
-export const sendContact = ({ state }, form) => {
+export const sendContact = (form) => {
     axios.post(
         process.env.VUE_APP_API_URL+'/contact',{
             first_name: form.first_name,
@@ -158,10 +192,22 @@ export const sendContact = ({ state }, form) => {
             object: form.object,
             message: form.message,
 
-        },).then(() => {
+        }
+        ).then(() => {
+        const toast = document.createElement('ion-toast');
+        toast.message = 'Message Envoyé';
+        toast.duration = 2000;
+
+        document.body.appendChild(toast);
+        return toast.present();
 
     }).catch(() => {
-        state.msg.error = "Echec du get"
+        const toast = document.createElement('ion-toast');
+        toast.message = 'erreur lors de l envoie';
+        toast.duration = 2000;
+
+        document.body.appendChild(toast);
+        return toast.present();
     });
 }
 
@@ -173,12 +219,11 @@ export const showCgu = ({ commit }, id) => {
 }
 
 export const sessionUpdate = ({ state }) => {
-
     state.user.data.subscribeNow = true;
     router.push('profile');
 }
 
-export const showProfile = () => {
+export const showProfile = ( ) => {
     router.push('profile');
 }
 

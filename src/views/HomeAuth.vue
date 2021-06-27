@@ -38,7 +38,7 @@
 
 
 <script>
-import {  } from 'vuex'
+import {mapGetters} from 'vuex'
 
 import Player from "./Player";
 export default {
@@ -49,13 +49,23 @@ export default {
         };
     },
     computed: {
+        ...mapGetters(['msg']),
     },
     components: {
         Player,
     },
     methods: {
+        async presentToastSuccess() {
+            const toast = document.createElement('ion-toast');
+            toast.message = this.msg.success;
+            toast.duration = 2000;
+
+            document.body.appendChild(toast);
+            return toast.present();
+        }
     },
     mounted(){
+        this.presentToastSuccess()
     }
 }
 </script>

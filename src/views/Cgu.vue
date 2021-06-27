@@ -130,6 +130,11 @@ export default {
             message_processed: "",
             form: {
 
+            },
+            dataSend: {
+                priceId: '',
+                coupon: '',
+                last4: '4242',
             }
         };
     },
@@ -188,7 +193,9 @@ export default {
                             this.$emit('requiresAction', true)
                             this.$emit('paymentIntent', response.data)
                         } else {
-                            this.sessionUpdate();
+                            this.dataSend.priceId = this.planId;
+                            this.dataSend.coupon = this.form.promo;
+                            this.sessionUpdate(this.dataSend);
                             this.$emit('paymentProcessed', true);
                             this.$emit('messageProcessed', "Merci de votre abonnement ! 🤑");
                         }

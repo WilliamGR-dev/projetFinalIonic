@@ -39,8 +39,8 @@
         <div class="card text-dark" v-for="actu in news.data"  v-bind:key="actu.id" style="width: 75%;margin: auto;margin-top: 50px;margin-bottom: 50px;" >
           <img  src="https://picsum.photos/1000/1000" class="card-img-top" alt="...">
           <div class="card-body">
-            <h5 class="card-title">{{ actu.title }}</h5>
-            <p class="card-text">{{ actu.text_description }}</p>
+              <div><h5 class="card-title text-white">{{ actu.title }}</h5><span class="card-title text-white">{{ actu.date }}</span></div>
+            <p class="card-text text-white">{{ actu.text_description }}</p>
           </div>
         </div>
       </div>

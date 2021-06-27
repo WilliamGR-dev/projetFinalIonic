@@ -50,8 +50,30 @@ export default {
     methods: {
         ...mapActions(['sendContact']),
         sendMail(form){
-            this.sendContact(form)
-            this.form = {}
+            this.contact(form)
+        },
+        contact(form) {
+            if (
+                this.validateEmail(form.email) &&
+                form.name.trim() &&
+                form.subject.trim() &&
+                form.body.trim()
+            ) {
+                this.sendContact(form)
+                this.form = {}
+            }
+            else{
+                const toast = document.createElement('ion-toast');
+                toast.message = 'Formulaire invalide';
+                toast.duration = 2000;
+
+                document.body.appendChild(toast);
+                return toast.present();
+            }
+        },
+        validateEmail(email) {
+            const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(String(email).toLowerCase());
         },
 
     },

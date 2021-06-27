@@ -218,7 +218,28 @@ export const showCgu = ({ commit }, id) => {
     router.push('cgu');
 }
 
-export const sessionUpdate = ({ state }) => {
+export const sessionUpdate = ({ state }, form) => {
+    let coupon = 'Aucune reduction';
+    let price = '';
+    if (form.coupon == 'WEBSTART10'){
+        coupon = '10%';
+    }
+    if (form.priceId == 'price_1J2H2ZGsegk9YRQooblJfbxa'){
+         price = '9,99 €'
+
+    }
+    if (form.priceId == 'price_1J2H1vGsegk9YRQoKXhtXvqW'){
+         price = '4,99 €'
+    }
+    const alert = document.createElement('ion-alert');
+    alert.cssClass = 'my-custom-class';
+    alert.header = 'Abonnement effectué';
+    alert.subHeader = state.user.data.name;
+    alert.message = 'Prix:'+price+' Reduction'+ coupon +' 4 derniers chiffres:'+form.last4;
+    alert.buttons = ['OK'];
+
+    document.body.appendChild(alert);
+    alert.present();
     state.user.data.subscribeNow = true;
     router.push('profile');
 }
